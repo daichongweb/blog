@@ -1,0 +1,1195 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  
+  <title>php+element+aliyunOss实现单图web直传 | Daichong&#39;s Blog</title>
+  
+  <meta name="keywords" content="戴崇博客,戴崇技术博客,php技术博客,hexo博客,web技术博客">
+  
+  
+  <meta name="description" content="戴崇博客,戴崇技术博客,php技术博客,hexo博客,web技术博客">
+  
+
+  
+  <link rel="alternate" href="../atom.xml" title="Daichong's Blog">
+  
+
+  <meta name="HandheldFriendly" content="True">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <!-- meta -->
+  
+
+  <!-- link -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.css">
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.10.1/css/all.min.css">
+  
+
+  
+  <link rel="shortcut icon" type="image/x-icon" href=".././image/logo.ico">
+  
+
+  
+    <link rel="stylesheet" href="../style.css">
+  
+
+  <script>
+    function setLoadingBarProgress(num) {
+      document.getElementById('loading-bar').style.width=num+"%";
+    }
+  </script>
+
+  
+  
+</head>
+
+<body>
+  
+  
+  <div class="cover-wrapper">
+    <cover class='cover post half'>
+      
+        
+  <h1 class='title'>Daichong's Blog</h1>
+
+
+  <div class="m_search">
+    <form name="searchform" class="form u-search-form">
+      <input type="text" class="input u-search-input" placeholder="" />
+      <i class="icon fas fa-search fa-fw"></i>
+    </form>
+  </div>
+
+<div class='menu navgation'>
+  <ul class='h-list'>
+    
+      
+        <li>
+          <a class="nav home" href="../index.html"
+            
+            
+            id="..index.html">
+            <i class='fas fa-rss fa-fw'></i>&nbsp;博文
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="../archives/"
+            
+            
+            id="..archives">
+            <i class='fas fa-code-branch fa-fw'></i>&nbsp;归档
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="../friends/"
+            
+              rel="nofollow"
+            
+            
+            id="..friends">
+            <i class='fas fa-link fa-fw'></i>&nbsp;友链
+          </a>
+        </li>
+      
+        <li>
+          <a class="nav home" href="../about/"
+            
+              rel="nofollow"
+            
+            
+            id="..about">
+            <i class='fas fa-info-circle fa-fw'></i>&nbsp;关于
+          </a>
+        </li>
+      
+    
+  </ul>
+</div>
+
+      
+    </cover>
+    <header class="l_header material">
+  <div id="loading-bar-wrapper">
+    <div id="loading-bar" class="material"></div>
+  </div>
+
+	<div class='wrapper'>
+		<div class="nav-main container container--flex">
+      <a class="logo flat-box" href='../index.html' >
+        
+          Daichong's Blog
+        
+      </a>
+			<div class='menu navgation'>
+				<ul class='h-list'>
+          
+  					
+  						<li>
+								<a class="nav flat-box" href="../index.html"
+                  
+                  
+                  id="..index.html">
+									<i class='fas fa-grin fa-fw'></i>&nbsp;首页
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="../blog/categories/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="..blogcategories">
+									<i class='fas fa-folder-open fa-fw'></i>&nbsp;分类
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="../blog/tags/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="..blogtags">
+									<i class='fas fa-hashtag fa-fw'></i>&nbsp;标签
+								</a>
+							</li>
+      			
+  						<li>
+								<a class="nav flat-box" href="../blog/archives/"
+                  
+                    rel="nofollow"
+                  
+                  
+                  id="..blogarchives">
+									<i class='fas fa-archive fa-fw'></i>&nbsp;归档
+								</a>
+							</li>
+      			
+      		
+				</ul>
+			</div>
+
+			
+				<div class="m_search">
+					<form name="searchform" class="form u-search-form">
+						<input type="text" class="input u-search-input" placeholder="搜索" />
+						<i class="icon fas fa-search fa-fw"></i>
+					</form>
+				</div>
+			
+			<ul class='switcher h-list'>
+				
+					<li class='s-search'><a class="fas fa-search fa-fw" href='javascript:void(0)'></a></li>
+				
+				<li class='s-menu'><a class="fas fa-bars fa-fw" href='javascript:void(0)'></a></li>
+			</ul>
+		</div>
+
+		<div class='nav-sub container container--flex'>
+			<a class="logo flat-box"></a>
+			<ul class='switcher h-list'>
+				<li class='s-comment'><a class="flat-btn fas fa-comments fa-fw" href='javascript:void(0)'></a></li>
+        
+          <li class='s-toc'><a class="flat-btn fas fa-list fa-fw" href='javascript:void(0)'></a></li>
+        
+			</ul>
+		</div>
+	</div>
+</header>
+	<aside class="menu-phone">
+    <header>
+		<nav class="menu navgation">
+      <ul>
+        
+          
+            <li>
+							<a class="nav flat-box" href="../index.html"
+                
+                
+                id="..index.html">
+								<i class='fas fa-clock fa-fw'></i>&nbsp;近期文章
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="../blog/archives/"
+                
+                  rel="nofollow"
+                
+                
+                id="..blogarchives">
+								<i class='fas fa-archive fa-fw'></i>&nbsp;文章归档
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="../projects/"
+                
+                
+                id="..projects">
+								<i class='fas fa-code-branch fa-fw'></i>&nbsp;开源项目
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="../friends/"
+                
+                  rel="nofollow"
+                
+                
+                id="..friends">
+								<i class='fas fa-link fa-fw'></i>&nbsp;我的友链
+							</a>
+            </li>
+          
+            <li>
+							<a class="nav flat-box" href="../about/"
+                
+                  rel="nofollow"
+                
+                
+                id="..about">
+								<i class='fas fa-info-circle fa-fw'></i>&nbsp;关于小站
+							</a>
+            </li>
+          
+       
+      </ul>
+		</nav>
+    </header>
+	</aside>
+<script>setLoadingBarProgress(40);</script>
+
+  </div>
+
+
+  <div class="l_body">
+    <div class='body-wrapper'>
+      <div class='l_main'>
+  
+
+  <article id="post" class="post white-box article-type-post" itemscope itemprop="blogPost">
+    
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  
+    <h1 class="title">
+      <a href="">
+        php+element+aliyunOss实现单图web直传
+      </a>
+    </h1>
+  
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://www.daichongweb.com" rel="nofollow">
+        
+          <i class="fas fa-user" aria-hidden="true"></i>
+        
+        <p>Daichongweb</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-12-07</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+  
+    <div class="new-meta-item browse busuanzi">
+      <a class='notlink'>
+        <i class="fas fa-eye" aria-hidden="true"></i>
+        <p>
+          <span id="busuanzi_value_page_pv">
+            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
+          </span>
+        </p>
+      </a>
+    </div>
+  
+
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+    <section class="article typo">
+      <div class="article-entry" itemprop="articleBody">
+        <h4 id="业务逻辑"><a href="#业务逻辑" class="headerlink" title="业务逻辑"></a>业务逻辑</h4><h5 id="原有业务"><a href="#原有业务" class="headerlink" title="原有业务"></a>原有业务</h5><img src="/php-element-aliyunOss实现单图web直传/img/1.png">
+<a id="more"></a>
+<p>和数据直传到 OSS 相比，以上方法有三个缺点：</p>
+<ul>
+<li>上传慢：用户数据需先上传到应用服务器，之后再上传到OSS。网络传输时间比直传到OSS多一倍。如果用户数据不通过应用服务器中转，而是直传到OSS，速度将大大提升。而且OSS采用BGP带宽，能保证各地各运营商之间的传输速度。</li>
+<li>扩展性差：如果后续用户多了，应用服务器会成为瓶颈。</li>
+<li>费用高：需要准备多台应用服务器。由于OSS上传流量是免费的，如果数据直传到OSS，不通过应用服务器，那么将能省下几台应用服务器。</li>
+</ul>
+<h5 id="代替业务"><a href="#代替业务" class="headerlink" title="代替业务"></a>代替业务</h5><img src="/php-element-aliyunOss实现单图web直传/img/2.png">
+<p>使用Oss web直传，能有效的解决上传速度过慢的问题。</p>
+<h4 id="实践"><a href="#实践" class="headerlink" title="实践"></a>实践</h4><h5 id="php后端签名代码"><a href="#php后端签名代码" class="headerlink" title="php后端签名代码"></a>php后端签名代码</h5><figure class="highlight php"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 阿里Oss上传验签类</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">OssPolicy</span></span></span><br><span class="line"><span class="class"></span>&#123;</span><br><span class="line">    <span class="keyword">private</span>  <span class="function"><span class="keyword">function</span> <span class="title">gmtIso8601</span><span class="params">($time)</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $dtStr = date(<span class="string">"c"</span>, $time);</span><br><span class="line">        $mydatetime = <span class="keyword">new</span> DateTime($dtStr);</span><br><span class="line">        $expiration = $mydatetime-&gt;format(DateTime::ISO8601);</span><br><span class="line">        $pos = strpos($expiration, <span class="string">'+'</span>);</span><br><span class="line">        $expiration = substr($expiration, <span class="number">0</span>, $pos);</span><br><span class="line">        <span class="keyword">return</span> $expiration . <span class="string">"Z"</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">     * 获取签名</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="function"><span class="keyword">function</span> <span class="title">policy</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        $id = Config(<span class="string">'aliyun.webOss.accessKeyId'</span>); <span class="comment">// oss accessKeyId</span></span><br><span class="line">        $key = Config(<span class="string">'aliyun.webOss.accessKeySecret'</span>); <span class="comment">// oss accessKeySecret</span></span><br><span class="line">        $host = Config(<span class="string">'aliyun.webOss.host'</span>); <span class="comment">// oss 上传地址</span></span><br><span class="line">        $callbackUrl = Config(<span class="string">'aliyun.webOss.callbackUrl'</span>);<span class="comment">// 回调地址 这个可以忽略</span></span><br><span class="line">        $dir =  Config(<span class="string">'aliyun.webOss.dir'</span>); <span class="comment">// 存放的文件夹</span></span><br><span class="line"></span><br><span class="line">        $callback_param = <span class="keyword">array</span>(</span><br><span class="line">            <span class="string">'callbackUrl'</span> =&gt; $callbackUrl,</span><br><span class="line">            <span class="string">'callbackBody'</span> =&gt; <span class="string">'filename=$&#123;object&#125;&amp;size=$&#123;size&#125;&amp;mimeType=$&#123;mimeType&#125;&amp;height=$&#123;imageInfo.height&#125;&amp;width=$&#123;imageInfo.width&#125;'</span>,</span><br><span class="line">            <span class="string">'callbackBodyType'</span> =&gt; <span class="string">"application/x-www-form-urlencoded"</span></span><br><span class="line">        );</span><br><span class="line">        $callback_string = json_encode($callback_param);</span><br><span class="line">        $base64_callback_body = base64_encode($callback_string);</span><br><span class="line">        $now = time();</span><br><span class="line">        $expire = <span class="number">30</span>;</span><br><span class="line">        $end = $now + $expire;</span><br><span class="line">        $expiration = <span class="keyword">$this</span>-&gt;gmtIso8601($end);</span><br><span class="line"></span><br><span class="line">        $condition = <span class="keyword">array</span>(<span class="number">0</span> =&gt; <span class="string">'content-length-range'</span>, <span class="number">1</span> =&gt; <span class="number">0</span>, <span class="number">2</span> =&gt; <span class="number">1048576000</span>);</span><br><span class="line">        $conditions[] = $condition;</span><br><span class="line"></span><br><span class="line">        $start = <span class="keyword">array</span>(<span class="number">0</span> =&gt; <span class="string">'starts-with'</span>, <span class="number">1</span> =&gt; <span class="string">'$key'</span>, <span class="number">2</span> =&gt; $dir);</span><br><span class="line">        $conditions[] = $start;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        $arr = <span class="keyword">array</span>(<span class="string">'expiration'</span> =&gt; $expiration, <span class="string">'conditions'</span> =&gt; $conditions);</span><br><span class="line">        $policy = json_encode($arr);</span><br><span class="line">        $base64_policy = base64_encode($policy);</span><br><span class="line">        $string_to_sign = $base64_policy;</span><br><span class="line">        $signature = base64_encode(hash_hmac(<span class="string">'sha1'</span>, $string_to_sign, $key, <span class="keyword">true</span>));</span><br><span class="line"></span><br><span class="line">        $response = <span class="keyword">array</span>();</span><br><span class="line">        $response[<span class="string">'accessid'</span>] = $id;</span><br><span class="line">        $response[<span class="string">'host'</span>] = $host;</span><br><span class="line">        $response[<span class="string">'policy'</span>] = $base64_policy;</span><br><span class="line">        $response[<span class="string">'signature'</span>] = $signature;</span><br><span class="line">        $response[<span class="string">'expire'</span>] = $end;</span><br><span class="line">        $response[<span class="string">'callback'</span>] = $base64_callback_body;</span><br><span class="line">        $response[<span class="string">'dir'</span>] = $dir;</span><br><span class="line">        <span class="keyword">return</span> $response;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="封装组件-ossSingleUpload-vue"><a href="#封装组件-ossSingleUpload-vue" class="headerlink" title="封装组件 ossSingleUpload.vue"></a>封装组件 ossSingleUpload.vue</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div&gt;</span><br><span class="line">    &lt;el-upload</span><br><span class="line">      list-type=<span class="string">"picture-card"</span></span><br><span class="line">      <span class="class"><span class="keyword">class</span></span>=<span class="string">"avatar-uploader"</span></span><br><span class="line">      action=<span class="string">"http://daichongwbe.oss-cn-beijing.aliyuncs.com"</span> <span class="comment">// 上传地址</span></span><br><span class="line">      :data=<span class="string">"dataObj"</span></span><br><span class="line">      accept=<span class="string">".jpeg, .png, .jpg"</span> <span class="comment">// 允许上传的文件</span></span><br><span class="line">      :multiple=<span class="string">"false"</span> <span class="comment">// 禁止多图上传</span></span><br><span class="line">      :before-upload=<span class="string">"beforeUpload"</span> <span class="comment">// 上传前回调</span></span><br><span class="line">      :on-success=<span class="string">"handleUploadSuccess"</span> <span class="comment">// 上传成功后回调</span></span><br><span class="line">      :limit=<span class="string">"limit"</span> <span class="comment">// 限制上传数量</span></span><br><span class="line">      :show-file-list=<span class="string">"false"</span> <span class="comment">// 禁止列表展示</span></span><br><span class="line">      ref=<span class="string">"upload"</span></span><br><span class="line">    &gt;</span><br><span class="line">      &lt;img v-<span class="keyword">if</span>=<span class="string">"imageUrl"</span> :src=<span class="string">"imageUrl"</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"avatar"</span> /&gt;</span><br><span class="line">      &lt;i v-<span class="keyword">else</span> <span class="class"><span class="keyword">class</span></span>=<span class="string">"el-icon-plus avatar-uploader-icon"</span>&gt;&lt;<span class="regexp">/i&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>el-upload&gt;</span><br><span class="line">  &lt;<span class="regexp">/div&gt;</span></span><br><span class="line"><span class="regexp">&lt;/</span>template&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">import</span> &#123; getPolicy &#125; <span class="keyword">from</span> <span class="string">"@/api/oss/token"</span>; <span class="comment">// 后端验签接口</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> &#123;</span><br><span class="line">  name: <span class="string">"ossSingleUpload"</span>, <span class="comment">//组件命名</span></span><br><span class="line">  props: &#123;</span><br><span class="line">    limit: <span class="built_in">Number</span>, <span class="comment">// 参数</span></span><br><span class="line">    imgCover: <span class="built_in">String</span> <span class="comment">// 参数</span></span><br><span class="line">  &#125;,</span><br><span class="line">  data() &#123;</span><br><span class="line">    <span class="keyword">return</span> &#123;</span><br><span class="line">      dataObj: &#123;</span><br><span class="line">        policy: <span class="string">""</span>,</span><br><span class="line">        signature: <span class="string">""</span>,</span><br><span class="line">        key: <span class="string">""</span>,</span><br><span class="line">        ossaccessKeyId: <span class="string">""</span>,</span><br><span class="line">        dir: <span class="string">""</span>,</span><br><span class="line">        host: <span class="string">""</span>,</span><br><span class="line">        callback: <span class="string">""</span></span><br><span class="line">      &#125;,</span><br><span class="line">      imageUrl: <span class="string">""</span></span><br><span class="line">    &#125;;</span><br><span class="line">  &#125;,</span><br><span class="line">  created() &#123;</span><br><span class="line">    setTimeout(<span class="function"><span class="params">()</span> =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">this</span>.imageUrl = <span class="keyword">this</span>.imgCover;</span><br><span class="line">    &#125;, <span class="number">500</span>);</span><br><span class="line">  &#125;,</span><br><span class="line">  methods: &#123;</span><br><span class="line">    emitInput(val) &#123; <span class="comment">// 组件交互</span></span><br><span class="line">      <span class="keyword">this</span>.$emit(<span class="string">"input"</span>, val);</span><br><span class="line">    &#125;,</span><br><span class="line">    beforeUpload(file) &#123; <span class="comment">// 上传前钩子</span></span><br><span class="line">      <span class="keyword">let</span> _self = <span class="keyword">this</span>;</span><br><span class="line">      <span class="keyword">return</span> <span class="keyword">new</span> <span class="built_in">Promise</span>(<span class="function">(<span class="params">resolve, reject</span>) =&gt;</span> &#123;</span><br><span class="line">        getPolicy()</span><br><span class="line">          .then(<span class="function"><span class="params">response</span> =&gt;</span> &#123;</span><br><span class="line">            _self.dataObj.policy = response.data.policy;</span><br><span class="line">            _self.dataObj.signature = response.data.signature;</span><br><span class="line">            _self.dataObj.ossaccessKeyId = response.data.accessid;</span><br><span class="line">            _self.dataObj.key = response.data.dir + <span class="string">"$&#123;filename&#125;"</span>;</span><br><span class="line">            _self.dataObj.dir = response.data.dir;</span><br><span class="line">            _self.dataObj.host = response.data.host;</span><br><span class="line">            _self.dataObj.callback = response.data.callback;</span><br><span class="line">            resolve(<span class="literal">true</span>);</span><br><span class="line">          &#125;)</span><br><span class="line">          .catch(<span class="function"><span class="params">err</span> =&gt;</span> &#123;</span><br><span class="line">            <span class="built_in">console</span>.log(err);</span><br><span class="line">            reject(<span class="literal">false</span>);</span><br><span class="line">          &#125;);</span><br><span class="line">      &#125;);</span><br><span class="line">    &#125;,</span><br><span class="line">    handleUploadSuccess(res, file) &#123; <span class="comment">// 上传成功后</span></span><br><span class="line">       <span class="comment">// 清除上次的上传记录，这里如果不清除会导致第二次上传无效。</span></span><br><span class="line">      <span class="keyword">this</span>.$refs.upload.clearFiles(); </span><br><span class="line">       <span class="comment">// 组装图片路径，这里根据业务需要来。</span></span><br><span class="line">      <span class="keyword">this</span>.imageUrl = <span class="keyword">this</span>.dataObj.host + <span class="string">"/"</span> + <span class="keyword">this</span>.dataObj.dir + file.name; </span><br><span class="line">      <span class="comment">// 组件交互，把图片路径发送给页面</span></span><br><span class="line">      <span class="keyword">this</span>.$emit(<span class="string">"getMessage"</span>, <span class="keyword">this</span>.imageUrl); </span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;;</span><br><span class="line">&lt;<span class="regexp">/script&gt;</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-class">.avatar-uploader</span> <span class="selector-class">.el-upload</span> &#123;</span><br><span class="line">  <span class="attribute">border</span>: <span class="number">1px</span> dashed <span class="number">#d9d9d9</span>;</span><br><span class="line">  <span class="attribute">border-radius</span>: <span class="number">6px</span>;</span><br><span class="line">  <span class="attribute">cursor</span>: pointer;</span><br><span class="line">  <span class="attribute">position</span>: relative;</span><br><span class="line">  <span class="attribute">overflow</span>: hidden;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.avatar-uploader</span> <span class="selector-class">.el-upload</span><span class="selector-pseudo">:hover</span> &#123;</span><br><span class="line">  <span class="attribute">border-color</span>: <span class="number">#409eff</span>;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.avatar-uploader-icon</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">font-size</span>: <span class="number">28px</span>;</span><br><span class="line">  <span class="attribute">color</span>: <span class="number">#8c939d</span>;</span><br><span class="line">  <span class="attribute">text-align</span>: center;</span><br><span class="line">&#125;</span><br><span class="line"><span class="selector-class">.avatar</span> &#123;</span><br><span class="line">  <span class="attribute">width</span>: <span class="number">100%</span>;</span><br><span class="line">  <span class="attribute">display</span>: block;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h5 id="页面调用"><a href="#页面调用" class="headerlink" title="页面调用"></a>页面调用</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">&lt;template&gt;</span><br><span class="line">  &lt;div <span class="class"><span class="keyword">class</span></span>=<span class="string">"app-container"</span>&gt;</span><br><span class="line">    &lt;oss-single-upload @getMessage=<span class="string">"coverImg"</span> :imgCover=<span class="string">"imgCover"</span> :limit=<span class="string">"1"</span>&gt;&lt;<span class="regexp">/oss-single-upload&gt;</span></span><br><span class="line"><span class="regexp">  &lt;/</span>div&gt;</span><br><span class="line">&lt;<span class="regexp">/template&gt;</span></span><br><span class="line"><span class="regexp"></span></span><br><span class="line"><span class="regexp">&lt;script&gt;</span></span><br><span class="line"><span class="regexp">import ossSingleUpload from "@/</span>components/Upload/ossSingleUpload<span class="string">"; // 引入组件</span></span><br><span class="line"><span class="string">export default &#123;</span></span><br><span class="line"><span class="string">  components: &#123; ossSingleUpload &#125;,</span></span><br><span class="line"><span class="string">  data() &#123;</span></span><br><span class="line"><span class="string">    return &#123;</span></span><br><span class="line"><span class="string">      imgCover:"</span><span class="string">"</span></span><br><span class="line"><span class="string">    &#125;;</span></span><br><span class="line"><span class="string">  &#125;,</span></span><br><span class="line"><span class="string">  methods: &#123;</span></span><br><span class="line"><span class="string">    coverImg(imgUrl) &#123;</span></span><br><span class="line"><span class="string">      console.log(imgUrl); //得到的上传图片路径</span></span><br><span class="line"><span class="string">    &#125;</span></span><br><span class="line"><span class="string">  &#125;</span></span><br><span class="line"><span class="string">&#125;;</span></span><br><span class="line"><span class="string">&lt;/script&gt;</span></span><br></pre></td></tr></table></figure>
+<h4 id="请求结果"><a href="#请求结果" class="headerlink" title="请求结果"></a>请求结果</h4><img src="/php-element-aliyunOss实现单图web直传/img/3.png">
+<p>在callbackurl为空或者callbackurl文件内容错误的情况下，这里是没有返回值的。</p>
+<img src="/php-element-aliyunOss实现单图web直传/img/4.png">
+<h4 id="效果展示"><a href="#效果展示" class="headerlink" title="效果展示"></a>效果展示</h4><img src="/php-element-aliyunOss实现单图web直传/img/5.gif">
+<h4 id="github仓库"><a href="#github仓库" class="headerlink" title="github仓库"></a>github仓库</h4><p><a href="https://github.com/DaiChongyu/osswebupload" target="_blank" rel="noopener">点击查看源代码</a></p>
+
+      </div>
+      
+        <br>
+        
+
+
+  <section class='meta' id="footer-meta">
+    <div class='new-meta-box'>
+      
+        
+          <div class="new-meta-item date" itemprop="dateUpdated" datetime="2021-09-03T13:56:57+08:00">
+  <a class='notlink'>
+    <i class="fas fa-clock" aria-hidden="true"></i>
+    <p>更新于 2021年9月3日</p>
+  </a>
+</div>
+
+        
+      
+        
+          
+  
+  <div class="new-meta-item meta-tags"><a class="tag" href="../tags/vue/" rel="nofollow"><i class="fas fa-tag" aria-hidden="true"></i><p>vue</p></a></div>
+
+
+        
+      
+        
+          
+  <div class="new-meta-item share -mob-share-list">
+  <div class="-mob-share-list share-body">
+    
+      
+        <a class="-mob-share-qq" title="QQ好友" rel="external nofollow noopener noreferrer"
+          
+          href="http://connect.qq.com/widget/shareqq/index.html?url=http://www.daichongweb.com/php-element-aliyunOss实现单图web直传/&title=php+element+aliyunOss实现单图web直传 | Daichong's Blog&summary=业务逻辑原有业务"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qq.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-qzone" title="QQ空间" rel="external nofollow noopener noreferrer"
+          
+          href="https://sns.qzone.qq.com/cgi-bin/qzshare/cgi_qzshare_onekey?url=http://www.daichongweb.com/php-element-aliyunOss实现单图web直传/&title=php+element+aliyunOss实现单图web直传 | Daichong's Blog&summary=业务逻辑原有业务"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/qzone.png">
+          
+        </a>
+      
+    
+      
+        <a class="-mob-share-weibo" title="微博" rel="external nofollow noopener noreferrer"
+          
+          href="http://service.weibo.com/share/share.php?url=http://www.daichongweb.com/php-element-aliyunOss实现单图web直传/&title=php+element+aliyunOss实现单图web直传 | Daichong's Blog&summary=业务逻辑原有业务"
+          
+          >
+          
+            <img src="https://cdn.jsdelivr.net/gh/xaoxuu/assets@19.1.9/logo/128/weibo.png">
+          
+        </a>
+      
+    
+  </div>
+</div>
+
+
+
+        
+      
+    </div>
+  </section>
+
+
+      
+      
+          <div class="prev-next">
+              
+                  <section class="prev">
+                      <span class="art-item-left">
+                          <h6><i class="fas fa-chevron-left" aria-hidden="true"></i>&nbsp;上一页</h6>
+                          <h4>
+                              <a href="../php7-4预加载与swoole常驻内存有何区别？/" rel="prev" title="php7.4预加载与swoole常驻内存有何区别？">
+                                
+                                    php7.4预加载与swoole常驻内存有何区别？
+                                
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="../tags/php/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> php</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+              
+                  <section class="next">
+                      <span class="art-item-right" aria-hidden="true">
+                          <h6>下一页&nbsp;<i class="fas fa-chevron-right" aria-hidden="true"></i></h6>
+                          <h4>
+                              <a href="../Laravel消息队列/" rel="prev" title="Laravel消息队列">
+                                  
+                                      Laravel消息队列
+                                  
+                              </a>
+                          </h4>
+                          
+                              
+                              <h6 class="tags">
+                                  <a class="tag" href="../tags/laravel/"><i class="fas fa-tag fa-fw" aria-hidden="true"></i> laravel</a>
+                              </h6>
+                          
+                      </span>
+                  </section>
+              
+          </div>
+      
+    </section>
+  </article>
+
+
+
+  <!-- 显示推荐文章和评论 -->
+
+
+
+  <article class="post white-box comments">
+    <section class="article typo">
+      <h4><i class="fas fa-comments fa-fw" aria-hidden="true"></i>&nbsp;评论</h4>
+      
+      
+      
+        <section id="comments">
+          <div id="gitalk-container"></div>
+        </section>
+      
+      
+    </section>
+  </article>
+
+
+
+
+
+
+<!-- 根据页面mathjax变量决定是否加载MathJax数学公式js -->
+
+
+
+  <script>
+    window.subData = {
+      title: 'php+element+aliyunOss实现单图web直传',
+      tools: true
+    }
+  </script>
+
+
+</div>
+<aside class='l_side'>
+  
+    
+    
+      
+      
+        
+          
+          
+            
+              <section class='widget author'>
+  <div class='content material'>
+    
+      <div class='avatar'>
+        <img class='avatar' src='../image/user.png'/>
+      </div>
+    
+    
+    
+      <div class="social-wrapper">
+        
+          
+            <a href="../atom.xml"
+              class="social fas fa-rss flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="mailto:daichongweb@foxmail.com"
+              class="social fas fa-envelope flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://github.com/DaiChongyu"
+              class="social fab fa-github flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+          
+            <a href="https://music.163.com/#/user/home?id=63035382"
+              class="social fas fa-headphones-alt flat-btn"
+              target="_blank"
+              rel="external nofollow noopener noreferrer">
+            </a>
+          
+        
+      </div>
+    
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget toc-wrapper'>
+    
+<header class='material'>
+  <div><i class="fas fa-list fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;本文目录</div>
+  
+    <!-- <div class='wrapper'><a class="s-toc rightBtn" rel="external nofollow noopener noreferrer" href="javascript:void(0)"><i class="fas fa-thumbtack fa-fw"></i></a></div> -->
+  
+</header>
+
+    <div class='content material'>
+      <ol class="toc"><li class="toc-item toc-level-4"><a class="toc-link" href="#业务逻辑"><span class="toc-text">业务逻辑</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#原有业务"><span class="toc-text">原有业务</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#代替业务"><span class="toc-text">代替业务</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#实践"><span class="toc-text">实践</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#php后端签名代码"><span class="toc-text">php后端签名代码</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#封装组件-ossSingleUpload-vue"><span class="toc-text">封装组件 ossSingleUpload.vue</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#页面调用"><span class="toc-text">页面调用</span></a></li></ol></li><li class="toc-item toc-level-4"><a class="toc-link" href="#请求结果"><span class="toc-text">请求结果</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#效果展示"><span class="toc-text">效果展示</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#github仓库"><span class="toc-text">github仓库</span></a></li></ol>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              <section class='widget grid'>
+  
+<header class='material'>
+  <div><i class="fas fa-map-signs fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;站内导航</div>
+  
+</header>
+
+  <div class='content material'>
+    <ul class="grid navgation">
+      
+        <li><a class="flat-box" title="../index.html" href="../index.html"
+          
+          
+          id="..index.html">
+          
+            <i class="fas fa-clock fa-fw" aria-hidden="true"></i>
+          
+          近期文章
+        </a></li>
+      
+        <li><a class="flat-box" title="../archives/" href="../archives/"
+          
+            rel="nofollow"
+          
+          
+          id="..archives">
+          
+            <i class="fas fa-archive fa-fw" aria-hidden="true"></i>
+          
+          文章归档
+        </a></li>
+      
+        <li><a class="flat-box" title="https://github.com/DaiChongyu" href="https://github.com/DaiChongyu"
+          
+          
+          id="https:github.comDaiChongyu">
+          
+            <i class="fas fa-code-branch fa-fw" aria-hidden="true"></i>
+          
+          开源项目
+        </a></li>
+      
+        <li><a class="flat-box" title="../friends/" href="../friends/"
+          
+            rel="nofollow"
+          
+          
+          id="..friends">
+          
+            <i class="fas fa-link fa-fw" aria-hidden="true"></i>
+          
+          我的友链
+        </a></li>
+      
+        <li><a class="flat-box" title="../about/" href="../about/"
+          
+            rel="nofollow"
+          
+          
+          id="..about">
+          
+            <i class="fas fa-info-circle fa-fw" aria-hidden="true"></i>
+          
+          关于小站
+        </a></li>
+      
+    </ul>
+  </div>
+</section>
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget category'>
+    
+<header class='material'>
+  <div><i class="fas fa-folder-open fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;文章分类</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="../blog/categories/"
+    title="blog/categories/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content material'>
+      <ul class="entry">
+        
+          <li><a class="flat-box" title="../categories/hexo/" href="../categories/hexo/"><div class='name'>hexo</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="../categories/liunx/" href="../categories/liunx/"><div class='name'>liunx</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box" title="../categories/mysql/" href="../categories/mysql/"><div class='name'>mysql</div><div class='badge'>(1)</div></a></li>
+        
+          <li><a class="flat-box" title="../categories/php扩展类/" href="../categories/php扩展类/"><div class='name'>php扩展类</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box" title="../categories/php框架/" href="../categories/php框架/"><div class='name'>php框架</div><div class='badge'>(2)</div></a></li>
+        
+          <li><a class="flat-box" title="../categories/开发工具/" href="../categories/开发工具/"><div class='name'>开发工具</div><div class='badge'>(2)</div></a></li>
+        
+      </ul>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+            
+              
+  <section class='widget tagcloud'>
+    
+<header class='material'>
+  <div><i class="fas fa-tags fa-fw" aria-hidden="true"></i>&nbsp;&nbsp;热门标签</div>
+  
+    <a class="rightBtn"
+    
+      rel="nofollow"
+    
+    
+    href="../blog/tags/"
+    title="blog/tags/">
+    <i class="fas fa-expand-arrows-alt fa-fw"></i></a>
+  
+</header>
+
+    <div class='content material'>
+      <a href="../tags/Linux/" style="font-size: 14px; color: #999">Linux</a> <a href="../tags/composer/" style="font-size: 14px; color: #999">composer</a> <a href="../tags/git/" style="font-size: 14px; color: #999">git</a> <a href="../tags/hexo/" style="font-size: 14px; color: #999">hexo</a> <a href="../tags/java/" style="font-size: 14px; color: #999">java</a> <a href="../tags/jquery/" style="font-size: 18px; color: #7e7e7e">jquery</a> <a href="../tags/js/" style="font-size: 14px; color: #999">js</a> <a href="../tags/laravel/" style="font-size: 20px; color: #707070">laravel</a> <a href="../tags/linux/" style="font-size: 20px; color: #707070">linux</a> <a href="../tags/mysql/" style="font-size: 22px; color: #636363">mysql</a> <a href="../tags/nginx/" style="font-size: 14px; color: #999">nginx</a> <a href="../tags/node/" style="font-size: 14px; color: #999">node</a> <a href="../tags/php/" style="font-size: 24px; color: #555">php</a> <a href="../tags/phpExcel/" style="font-size: 14px; color: #999">phpExcel</a> <a href="../tags/php扩展类/" style="font-size: 18px; color: #7e7e7e">php扩展类</a> <a href="../tags/redis/" style="font-size: 14px; color: #999">redis</a> <a href="../tags/sublime/" style="font-size: 16px; color: #8b8b8b">sublime</a> <a href="../tags/tool/" style="font-size: 14px; color: #999">tool</a> <a href="../tags/tp5/" style="font-size: 16px; color: #8b8b8b">tp5</a> <a href="../tags/vue/" style="font-size: 16px; color: #8b8b8b">vue</a> <a href="../tags/walle/" style="font-size: 16px; color: #8b8b8b">walle</a> <a href="../tags/小程序支付/" style="font-size: 16px; color: #8b8b8b">小程序支付</a> <a href="../tags/开发工具/" style="font-size: 20px; color: #707070">开发工具</a> <a href="../tags/微信小程序/" style="font-size: 16px; color: #8b8b8b">微信小程序</a> <a href="../tags/微信支付/" style="font-size: 18px; color: #7e7e7e">微信支付</a> <a href="../tags/架构/" style="font-size: 16px; color: #8b8b8b">架构</a> <a href="../tags/测试/" style="font-size: 16px; color: #8b8b8b">测试</a> <a href="../tags/浏览器/" style="font-size: 14px; color: #999">浏览器</a>
+    </div>
+  </section>
+
+
+            
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+          
+          
+        
+      
+    
+
+  
+</aside>
+
+<footer id="footer" class="clearfix">
+  
+  
+    <div class="social-wrapper">
+      
+        
+          <a href="../atom.xml"
+            class="social fas fa-rss flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="mailto:daichongweb@foxmail.com"
+            class="social fas fa-envelope flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://github.com/DaiChongyu"
+            class="social fab fa-github flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+        
+          <a href="https://music.163.com/#/user/home?id=63035382"
+            class="social fas fa-headphones-alt flat-btn"
+            target="_blank"
+            rel="external nofollow noopener noreferrer">
+          </a>
+        
+      
+    </div>
+  
+  <br>
+  <div><p>博客内容遵循 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/deed.zh">署名-非商业性使用-相同方式共享 4.0 国际 (CC BY-NC-SA 4.0) 协议</a></p>
+</div>
+  <div>
+    .
+    <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">豫ICP备17020644号</a>
+    .
+    
+      ，
+      总访问量为
+      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
+      次
+    
+    。
+  </div>
+</footer>
+<script>setLoadingBarProgress(80);</script>
+
+
+      <script>setLoadingBarProgress(60);</script>
+    </div>
+    <a class="s-top fas fa-arrow-up fa-fw" href='javascript:void(0)'></a>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
+
+  <script>
+    var GOOGLE_CUSTOM_SEARCH_API_KEY = "";
+    var GOOGLE_CUSTOM_SEARCH_ENGINE_ID = "";
+    var ALGOLIA_API_KEY = "";
+    var ALGOLIA_APP_ID = "";
+    var ALGOLIA_INDEX_NAME = "";
+    var AZURE_SERVICE_NAME = "";
+    var AZURE_INDEX_NAME = "";
+    var AZURE_QUERY_KEY = "";
+    var BAIDU_API_ID = "";
+    var SEARCH_SERVICE = "hexo" || "hexo";
+    var ROOT = "/"||"/";
+    if(!ROOT.endsWith('/'))ROOT += '/';
+  </script>
+
+<script src="//instant.page/1.2.2" type="module" integrity="sha384-2xV8M5griQmzyiY3CDqh1dn4z3llDVqZDqzjzcY+jCBCk/a5fXJmuZ/40JJAPeoU"></script>
+
+
+  <script async src="https://cdn.jsdelivr.net/npm/scrollreveal@4.0.5/dist/scrollreveal.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      const $reveal = $('.reveal');
+      if ($reveal.length === 0) return;
+      const sr = ScrollReveal({ distance: 0 });
+      sr.reveal('.reveal');
+    });
+  </script>
+
+
+  <script src="https://cdn.jsdelivr.net/npm/node-waves@0.7.6/dist/waves.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      Waves.attach('.flat-btn', ['waves-button']);
+      Waves.attach('.float-btn', ['waves-button', 'waves-float']);
+      Waves.attach('.float-btn-light', ['waves-button', 'waves-float', 'waves-light']);
+      Waves.attach('.flat-box', ['waves-block']);
+      Waves.attach('.float-box', ['waves-block', 'waves-float']);
+      Waves.attach('.waves-image');
+      Waves.init();
+    });
+  </script>
+
+
+  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
+
+
+
+
+  
+  
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-backstretch/2.0.4/jquery.backstretch.min.js"></script>
+    <script type="text/javascript">
+      $(function(){
+        if ('') {
+          $('').backstretch(
+          ["/image/bg.png"],
+          {
+            duration: "0",
+            fade: "0"
+          });
+        } else {
+          $.backstretch(
+          ["/image/bg.png"],
+          {
+            duration: "0",
+            fade: "0"
+          });
+        }
+      });
+    </script>
+  
+
+
+
+
+
+
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script type="text/javascript">
+    var gitalk = new Gitalk({
+      clientID: "1d79843ce8db36ceeab7",
+      clientSecret: "cbef0db2fa4f12178b0066ba08030ada020938f1",
+      repo: "blog",
+      owner: "DaiChongyu",
+      admin: "DaiChongyu",
+      
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+      
+      distractionFreeMode: false  // Facebook-like distraction free mode
+    });
+    gitalk.render('gitalk-container');
+  </script>
+
+
+
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/app.js"></script>
+
+
+  <script src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-material-x@19.9/js/search.js"></script>
+
+
+
+
+<!-- 复制 -->
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  let COPY_SUCCESS = "复制成功";
+  let COPY_FAILURE = "复制失败";
+  /*页面载入完成后，创建复制按钮*/
+  !function (e, t, a) {
+    /* code */
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '  <i class="fa fa-copy"></i><span>复制</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+
+      clipboard.on('success', function(e) {
+        //您可以加入成功提示
+        console.info('Action:', e.action);
+        console.info('Text:', e.text);
+        console.info('Trigger:', e.trigger);
+        success_prompt(COPY_SUCCESS);
+        e.clearSelection();
+      });
+      clipboard.on('error', function(e) {
+        //您可以加入失败提示
+        console.error('Action:', e.action);
+        console.error('Trigger:', e.trigger);
+        fail_prompt(COPY_FAILURE);
+      });
+    }
+    initCopyCode();
+
+  }(window, document);
+
+  /**
+   * 弹出式提示框，默认1.5秒自动消失
+   * @param message 提示信息
+   * @param style 提示样式，有alert-success、alert-danger、alert-warning、alert-info
+   * @param time 消失时间
+   */
+  var prompt = function (message, style, time)
+  {
+      style = (style === undefined) ? 'alert-success' : style;
+      time = (time === undefined) ? 1500 : time*1000;
+      $('<div>')
+          .appendTo('body')
+          .addClass('alert ' + style)
+          .html(message)
+          .show()
+          .delay(time)
+          .fadeOut();
+  };
+
+  // 成功提示
+  var success_prompt = function(message, time)
+  {
+      prompt(message, 'alert-success', time);
+  };
+
+  // 失败提示
+  var fail_prompt = function(message, time)
+  {
+      prompt(message, 'alert-danger', time);
+  };
+
+  // 提醒
+  var warning_prompt = function(message, time)
+  {
+      prompt(message, 'alert-warning', time);
+  };
+
+  // 信息提示
+  var info_prompt = function(message, time)
+  {
+      prompt(message, 'alert-info', time);
+  };
+
+</script>
+
+
+<!-- fancybox -->
+<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js"></script>
+<script>
+  let LAZY_LOAD_IMAGE = "";
+  $(".article-entry").find("fancybox").find("img").each(function () {
+      var element = document.createElement("a");
+      $(element).attr("data-fancybox", "gallery");
+      $(element).attr("href", $(this).attr("src"));
+      /* 图片采用懒加载处理时,
+       * 一般图片标签内会有个属性名来存放图片的真实地址，比如 data-original,
+       * 那么此处将原本的属性名src替换为对应属性名data-original,
+       * 修改如下
+       */
+       if (LAZY_LOAD_IMAGE) {
+         $(element).attr("href", $(this).attr("data-original"));
+       }
+      $(this).wrap(element);
+  });
+</script>
+
+
+
+
+
+  <script>setLoadingBarProgress(100);</script>
+</body>
+</html>
