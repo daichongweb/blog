@@ -334,17 +334,6 @@
           
             
   
-    <div class="new-meta-item browse busuanzi">
-      <a class='notlink'>
-        <i class="fas fa-eye" aria-hidden="true"></i>
-        <p>
-          <span id="busuanzi_value_page_pv">
-            <i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i>
-          </span>
-        </p>
-      </a>
-    </div>
-  
 
 
           
@@ -963,11 +952,6 @@
     <a href="https://xaoxuu.com/wiki/material-x/" target="_blank" class="codename">豫ICP备17020644号</a>
     .
     
-      ，
-      总访问量为
-      <span id="busuanzi_value_site_pv"><i class="fas fa-spinner fa-spin fa-fw" aria-hidden="true"></i></span>
-      次
-    
     。
   </div>
 </footer>
@@ -1023,8 +1007,6 @@
   </script>
 
 
-  <script async src="https://cdn.jsdelivr.net/gh/xaoxuu/cdn-busuanzi@2.3/js/busuanzi.pure.mini.js"></script>
-
 
 
 
@@ -1061,6 +1043,7 @@
 
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
   <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+  <script src="/js/md5.js"></script>
   <script type="text/javascript">
     var gitalk = new Gitalk({
       clientID: "1d79843ce8db36ceeab7",
@@ -1069,7 +1052,7 @@
       owner: "DaiChongyu",
       admin: "DaiChongyu",
       
-        id: location.pathname,      // Ensure uniqueness and length less than 50
+        id: md5(location.pathname),      // Ensure uniqueness and length less than 50
       
       distractionFreeMode: false  // Facebook-like distraction free mode
     });
