@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   
-  <title>Daichong&#39;s Blog</title>
+  <title>Dai Chong&#39;s blog</title>
   
   <meta name="keywords" content="戴崇博客,戴崇技术博客,php技术博客,hexo博客,web技术博客">
   
@@ -13,7 +13,7 @@
   
 
   
-  <link rel="alternate" href="../../atom.xml" title="Daichong's Blog">
+  <link rel="alternate" href="../../atom.xml" title="Dai Chong's blog">
   
 
   <meta name="HandheldFriendly" content="True">
@@ -60,7 +60,7 @@
 		<div class="nav-main container container--flex">
       <a class="logo flat-box" href='../../index.html' >
         
-          Daichong's Blog
+          Dai Chong's blog
         
       </a>
 			<div class='menu navgation'>
@@ -213,6 +213,101 @@
   <section class="post-list">
     
     
+      
+        
+          <div class='post-wrapper'>
+            <article class="post reveal ">
+  
+
+
+  <section class='meta'>
+    
+    
+    <div class="meta" id="header-meta">
+      
+        
+  <h2 class="title">
+    <a href="../../js一次提交却发起多次请求/">
+      js一次提交却发起多次请求
+    </a>
+  </h2>
+
+
+      
+      <div class='new-meta-box'>
+        
+          
+        
+          
+            
+  <div class='new-meta-item author'>
+    
+      <a href="http://www.daichongweb.com" rel="nofollow">
+        
+          <i class="fas fa-user" aria-hidden="true"></i>
+        
+        <p>Daichongweb</p>
+      </a>
+    
+  </div>
+
+
+          
+        
+          
+            <div class="new-meta-item date">
+  <a class='notlink'>
+    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
+    <p>2019-01-21</p>
+  </a>
+</div>
+
+          
+        
+          
+            
+
+          
+        
+          
+            
+
+          
+        
+      </div>
+      
+        <hr>
+      
+    </div>
+  </section>
+
+
+  <section class="article typo">
+    <div class="article-entry" itemprop="articleBody">
+      <p>最近做前端的工作比较多,经常会遇到一些自己不太明白的问题，非常的懵逼。<br>比如做一个简单的ajax异步提交会出现两次请求的问题，也是最近遇见比较奇怪的问题。</p>
+<p>经过排查之后发现两次出现两次请求的原因可能是：<br><blockquote><p>1.引入了两个同样的js,比如引入了两个同样的jquery插件</p>
+</blockquote><br></p>
+      
+        <div class="readmore">
+          <a href="../../js一次提交却发起多次请求/" class="flat-box">
+            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
+            阅读全文
+          </a>
+        </div>
+      
+    </div>
+    
+      <div class="full-width auto-padding tags">
+        
+          <a href="../../tags/js/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> js</a>
+        
+      </div>
+    
+  </section>
+</article>
+
+          </div>
+        
       
         
           <div class='post-wrapper'>
@@ -1068,100 +1163,6 @@
           </div>
         
       
-        
-          <div class='post-wrapper'>
-            <article class="post reveal ">
-  
-
-
-  <section class='meta'>
-    
-    
-    <div class="meta" id="header-meta">
-      
-        
-  <h2 class="title">
-    <a href="../../微信公众号支付回调中发送模板消息的问题以及如何实现发送模板消息/">
-      微信公众号支付回调中发送模板消息的问题以及如何实现发送模板消息
-    </a>
-  </h2>
-
-
-      
-      <div class='new-meta-box'>
-        
-          
-        
-          
-            
-  <div class='new-meta-item author'>
-    
-      <a href="http://www.daichongweb.com" rel="nofollow">
-        
-          <i class="fas fa-user" aria-hidden="true"></i>
-        
-        <p>Daichongweb</p>
-      </a>
-    
-  </div>
-
-
-          
-        
-          
-            <div class="new-meta-item date">
-  <a class='notlink'>
-    <i class="fas fa-calendar-alt" aria-hidden="true"></i>
-    <p>2018-07-21</p>
-  </a>
-</div>
-
-          
-        
-          
-            
-
-          
-        
-          
-            
-
-          
-        
-      </div>
-      
-        <hr>
-      
-    </div>
-  </section>
-
-
-  <section class="article typo">
-    <div class="article-entry" itemprop="articleBody">
-      <p>最近在做一个微信上的会员系统，涉及到微信支付回调中发送模板消息的问题。从来不喜欢看微信文档的我遇到了非常多的坑，最终还是填平了，希望大家再看了我这篇文章之后能少走些弯路吧！</p>
-<p>下面为大家贴出代码：<br><figure class="highlight php"><figcaption><span>支付回调</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//调用模板消息</span></span><br><span class="line">user_pay(<span class="number">100</span>,$userid,$openid,<span class="string">'pay_success'</span>,$integral.<span class="string">'元'</span>,$balance.<span class="string">'元'</span>);</span><br><span class="line"><span class="comment">//向微信发送支付成功</span></span><br><span class="line">$textTpl=<span class="string">"&lt;xml&gt;</span></span><br><span class="line"><span class="string">&lt;return_code&gt;&lt;![CDATA[SUCCESS]]&gt;&lt;/return_code&gt;</span></span><br><span class="line"><span class="string">&lt;return_msg&gt;&lt;![CDATA[OK]]&gt;&lt;/return_msg&gt;</span></span><br><span class="line"><span class="string">&lt;/xml&gt;"</span>;</span><br><span class="line"><span class="keyword">echo</span> $textTpl;</span><br></pre></td></tr></table></figure><br></p>
-      
-        <div class="readmore">
-          <a href="../../微信公众号支付回调中发送模板消息的问题以及如何实现发送模板消息/" class="flat-box">
-            <i class="fas fa-book-open fa-fw" aria-hidden="true"></i>
-            阅读全文
-          </a>
-        </div>
-      
-    </div>
-    
-      <div class="full-width auto-padding tags">
-        
-          <a href="../../tags/微信支付/" rel="nofollow"><i class="fas fa-tag fa-fw"></i> 微信支付</a>
-        
-      </div>
-    
-  </section>
-</article>
-
-          </div>
-        
-      
     
   </section>
   
@@ -1177,7 +1178,7 @@
             </a>
           
           <p class="current">
-            6 / 7
+            6 / 8
           </p>
           
             <a class="next" rel="next" href="../7/">
